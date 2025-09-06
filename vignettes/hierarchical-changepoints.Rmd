@@ -1,0 +1,32 @@
+---
+title: "Hierarchical Changepoints with hierCP"
+output: rmarkdown::html_vignette
+vignette: >
+  %\\VignetteIndexEntry{Hierarchical Changepoints with hierCP}
+  %\\VignetteEngine{knitr::rmarkdown}
+  \\usepackage[utf8]{inputenc}
+---
+
+```r
+library(hierCP)
+
+# Simulate data
+sim <- sim_hier_data(Tn=120, nb=3)
+Y <- sim$Y; S <- sim$S; lev <- sim$levels
+
+# Build hierarchy
+hier <- new_hierarchy(S, levels = lev)
+
+# Plot hierarchy
+plot_hierarchy(hier)
+
+# Detect CPs
+taus_ind <- detect_cp_independent(Y, lev, w=15, cost="mean")
+
+# Fit & forecast
+res <- fit_forecast(Y, hier, h=8, strategy="topdown")
+str(res)
+
+# Plot an example series with CPs
+plot_series_cps(Y[,1], taus_ind[[1]], title="Bottom series 1")
+```
