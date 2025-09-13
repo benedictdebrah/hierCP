@@ -6,7 +6,6 @@ last_segment <- function(x, cps) {
   x[(max(cps)+1):length(x)]
 }
 
-## Use base_forecast_last_segment from base_models.R
 
 # Reconcile: build all-series from bottom forecasts via S
 reconcile_sum <- function(yhatB, S) {

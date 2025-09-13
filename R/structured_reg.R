@@ -70,7 +70,16 @@ structured_fit <- function(Y, hierarchy, h, weights = c(bottom=0.6, mid=0.2, top
     lambda <- fit$par
   }
 
-  list(yhatB=yhatB, lambda=lambda)
+  # Shrink upper-level projections and adjust bottom forecasts
+  H <- H_from_S(S)
+  wB <- weights["bottom"]; wU <- weights["top"] + weights["mid"]
+  Lambda <- diag(lambda, nrow(H), nrow(H))
+  A <- t(H) %*% Lambda %*% H
+  M <- wB * diag(ncol(yhatB)) + wU * A
+  Minv <- solve(M)
+  # yhatB_star: apply shrink to each horizon row
+  yhatB_star <- yhatB %*% t(Minv * wB)
+  list(yhatB=yhatB, yhatB_star=yhatB_star, lambda=lambda)
 }
 
 #' Reconcile coherent forecasts from bottom forecasts

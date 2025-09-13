@@ -1,7 +1,32 @@
 
+
 # hierCP
 
-Hierarchical Changepoint Detection & Forecast Reconciliation in R
+HierCP: Hierarchical Changepoint Detection and Coherent Forecasting in R
+
+## Overview
+
+**HierCP** is an R package for detecting changepoints and producing coherent forecasts in hierarchical time series. It implements state-of-the-art methods for:
+
+- **Hierarchical changepoint detection** (independent, top-down, bottom-up)
+- **Structured regularization** to control upper-level forecast energy
+- **PELT-style pruning** for efficient changepoint search
+- **Level-aware penalties** for adaptive changepoint selection
+- **Coherent forecast reconciliation** using summing matrices and OLS
+- **Flexible last-segment modeling** (GM(1,1) or ARIMA)
+
+The package is designed for applications in finance, retail, energy, and any domain where time series are organized in hierarchies (e.g., regions, product lines, portfolios).
+
+### What does hierCP solve?
+
+HierCP addresses the challenge of detecting changepoints and forecasting in hierarchical time series, ensuring that forecasts are both accurate and coherent across all levels. It:
+
+- Finds changepoints in each series, accounting for hierarchical relationships and penalties
+- Produces forecasts for each segment, switching models as needed
+- Applies structured regularization to control upper-level forecast magnitude
+- Reconciles forecasts so that aggregate series equal the sum of their components
+
+This enables robust, interpretable forecasting in complex, multi-level systems.
 
 ## Installation
 

@@ -28,21 +28,21 @@ fit_forecast <- function(Y, hierarchy, h=6, strategy="topdown",
     yhatB[,i] <- base_forecast_last_segment(seg, h=h, n_star=n_star)
   }
 
-  # structured regularization (placeholder tuning)
+  # structured regularization (shrink and reconcile)
   sr <- structured_fit(Y=Y, hierarchy=hierarchy, h=h,
                        weights=weights, tune=tune_lambda)
 
-  # reconciliation
+  # reconciliation using shrunk bottom forecasts
   if (reconciliation == "sum") {
-    ytilde <- reconcile(yhatB, S)
+    ytilde <- reconcile(sr$yhatB_star, S)
   } else if (reconciliation == "ols") {
-    ytilde <- reconcile_ols(yhatB, S)
+    ytilde <- reconcile_ols(sr$yhatB_star, S)
   } else if (reconciliation == "none") {
-    ytilde <- yhatB
+    ytilde <- sr$yhatB_star
   } else {
     stop(sprintf("Unknown reconciliation method: %s", reconciliation))
   }
   colnames(ytilde) <- hierarchy$names
 
-  list(taus=taus, yhatB=yhatB, ytilde=ytilde, lambda=sr$lambda)
+  list(taus=taus, yhatB=sr$yhatB, yhatB_star=sr$yhatB_star, ytilde=ytilde, lambda=sr$lambda)
 }
