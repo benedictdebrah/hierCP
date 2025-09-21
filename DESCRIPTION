@@ -3,6 +3,7 @@ Type: Package
 Title: Hierarchical Changepoints and Forecast Reconciliation
 Version: 0.1.0
 Authors@R: c(
+    person(given = "Baah", family = "Kusi", email = "nanakbaahkusi@gmail.com", role = c("aut", "cre")),
     person(given = "Benedict", family = "Debrah", email = "benedictdebrah.o@gmail.com", role = "aut"))
 Description: Tools for hierarchical changepoint detection (independent, top-down, bottom-up), 
     windowed optimal partition with basic PELT-style pruning, base forecasting via GM(1,1) or ARIMA, 
